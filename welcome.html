@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>YearnTogether — AI × Gaming Launchpad (Medium-style)</title>
+  <meta name="description" content="YearnTogether is an AI × Gaming powered Web3 launchpad bringing millions of Web2 users to Web3 through a fun, gamified participation model." />
+  <meta name="theme-color" content="#0f172a" />
+  <meta property="og:title" content="YearnTogether — AI × Gaming Launchpad" />
+  <meta property="og:description" content="Bringing Web2 & Gaming users to Web3 with an AI-powered, gamified launchpad where anyone can participate in real innovation." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://dummyimage.com/1200x630/0f172a/ffffff&text=YearnTogether" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <style>
+    /* ===== Medium-like reading experience with subtle personality ===== */
+    :root {
+      --bg: #0b0e14;               /* deep ink */
+      --paper: #0f1220;            /* card bg */
+      --text: #e6e6ea;             /* primary text */
+      --muted: #b6b6c7;            /* secondary */
+      --brand: #8b5cf6;            /* violet */
+      --accent: #06b6d4;           /* cyan */
+      --success: #10b981;          /* green */
+      --danger: #ef4444;           /* red */
+      --ring: rgba(139, 92, 246, .25);
+      --maxw: 880px;
+      --radius: 18px;
+      --shadow: 0 10px 30px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.02);
+    }
+
+    html, body { height: 100%; }
+
+    /* Base body now solid; decorative gradients move to ::before */
+    body {
+      margin: 0;
+      font: 400 18px/1.75 ui-sans-serif, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--text);
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Single, fixed background layer so the shade is consistent everywhere */
+    body::before{
+      content:"";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background:
+        radial-gradient(1200px 800px at 10% -20%, rgba(6,182,212,.08), transparent 60%),
+        radial-gradient(900px 700px at 90% -10%, rgba(139,92,246,.10), transparent 60%),
+        var(--bg);
+      background-attachment: fixed, fixed, fixed;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.02);
+    }
+
+    /* Foreground wrapper to ensure proper stacking above ::before */
+    .page { position: relative; z-index: 0; }
+
+    /* Top nav */
+    .nav {
+      position: sticky; top: 0; z-index: 10;
+      backdrop-filter: saturate(140%) blur(8px);
+      background: linear-gradient(180deg, rgba(11,14,20,.85), rgba(11,14,20,.55));
+      border-bottom: 1px solid rgba(255,255,255,.05);
+    }
+    .nav-inner { max-width: var(--maxw); margin: 0 auto; padding: 14px 20px; display: flex; align-items: center; gap: 14px; }
+    .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); }
+    .brand-badge {
+      width: 36px; height: 36px; border-radius: 12px;
+      background: linear-gradient(135deg, var(--brand), var(--accent));
+      box-shadow: 0 6px 20px rgba(139,92,246,.35);
+      display: grid; place-items: center; font-weight: 900; letter-spacing: .5px;
+    }
+    .brand span { font-weight: 800; letter-spacing: .4px; }
+    .nav-links { margin-left: auto; display: flex; gap: 18px; flex-wrap: wrap; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-weight: 600; padding: 8px 10px; border-radius: 10px; }
+    .nav-links a:hover { color: var(--text); background: rgba(139,92,246,.08); }
+
+    /* Hero */
+    .hero { max-width: var(--maxw); margin: 38px auto 22px; padding: 0 20px; }
+    .kicker { color: var(--accent); font-weight: 800; letter-spacing: .15em; font-size: 12px; text-transform: uppercase; }
+    h1.hero-title {
+      margin: 12px 0 8px; font-size: clamp(32px, 6vw, 54px); line-height: 1.08; font-weight: 900;
+      letter-spacing: -.02em;
+      background: linear-gradient(180deg, #fff, #cbd5e1 60%, #a5b4fc);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .hero-sub { color: var(--muted); font-size: clamp(18px, 2.6vw, 22px); max-width: 64ch; }
+
+    .hero-cta { display:flex; gap: 12px; margin: 22px 0 8px; flex-wrap: wrap; }
+    .btn { appearance: none; border: 0; cursor: pointer; padding: 12px 16px; border-radius: 14px; font-weight: 800; }
+    .btn-primary { background: linear-gradient(135deg, var(--brand), var(--accent)); color: #0b0e14; box-shadow: 0 10px 24px rgba(139,92,246,.35); }
+    .btn-primary:hover { filter: brightness(1.05); }
+    .btn-ghost { background: rgba(255,255,255,.06); color: var(--text); border: 1px solid rgba(255,255,255,.08); }
+    .btn-ghost:hover { background: rgba(255,255,255,.09); }
+
+    .read-meta { display:flex; gap:18px; align-items:center; color: var(--muted); font-size: 14px; margin-top: 8px; }
+    .tag {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 6px;
+  background: rgba(6,182,212,.12);
+  color: #a5f3fc;
+  border: 1px solid rgba(6,182,212,.2);
+  font-size: 11px;
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: .03em;
+  text-transform: uppercase;
+  opacity: .85;
+}
+
+.audit-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: #0b0e14;
+  font-weight: 800;
+  font-size: 12px;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  padding: 6px 14px 6px 10px;
+  border-radius: 999px;
+  margin-bottom: 14px;
+  box-shadow: 0 4px 12px rgba(34,197,94,.35);
+}
+
+.audit-icon-box {
+  background: #0b0e14;        /* dark background behind logo */
+  padding: 4px;
+  border-radius: 6px;
+  display: grid;
+  place-items: center;
+}
+
+.audit-icon {
+  width: 14px;
+  height: 14px;
+  display: block;
+}
+
+/* Anchor for absolute badge */
+.trust-card { position: relative; }
+
+/* Corner badge container */
+.certik-badge{
+  position: absolute;
+  top: 16px; right: 16px;
+  display: inline-flex; align-items: center; gap: 10px;
+  background: #0b0e14;
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 14px;
+  padding: 10px 14px;
+  text-decoration: none;
+  box-shadow: 0 8px 24px rgba(0,0,0,.45);
+  will-change: transform, box-shadow; /* perf hint */
+  z-index: 2;
+}
+
+/* Big circular seal for the icon */
+.certik-seal{
+  width: clamp(42px, 6vw, 64px);
+  height: clamp(42px, 6vw, 64px);
+  border-radius: 999px;
+  background: radial-gradient(60% 60% at 40% 35%, rgba(255,255,255,.08), rgba(255,255,255,.02) 60%, transparent 85%), #12151f;
+  display: grid; place-items: center;
+  box-shadow:
+    0 10px 26px rgba(34,197,94,.18),
+    inset 0 0 0 1px rgba(255,255,255,.06);
+  animation: certikFloat 3.6s ease-in-out infinite, certikGlow 3.6s ease-in-out infinite;
+}
+
+.certik-seal img{
+  width: 70%; height: 70%; object-fit: contain; display: block;
+  /* keep original dark lines; we’re on dark disc so it’s visible */
+}
+
+/* Label text */
+.certik-badge span{
+  color: #e6e6ea;
+  font-weight: 800;
+  font-size: 12px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: .95;
+}
+
+/* Hover: gentle spin + lift */
+.certik-badge:hover .certik-seal{
+  animation-play-state: running;
+  transform: translateY(-2px);
+}
+.certik-badge:hover .certik-seal img{
+  animation: certikSpin 8s linear infinite;
+}
+
+/* Keyframes */
+@keyframes certikFloat{
+  0%,100% { transform: translateY(0); }
+  50%     { transform: translateY(-3px); }
+}
+@keyframes certikGlow{
+  0%,100% { box-shadow:
+              0 10px 26px rgba(34,197,94,.18),
+              inset 0 0 0 1px rgba(255,255,255,.06); }
+  50%     { box-shadow:
+              0 12px 30px rgba(34,197,94,.30),
+              inset 0 0 0 1px rgba(255,255,255,.10); }
+}
+@keyframes certikSpin{
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .certik-seal,
+  .certik-badge:hover .certik-seal img{
+    animation: none;
+    transform: none;
+  }
+}
+
+/* Responsive nudge so badge doesn’t overlap heading on small screens */
+@media (max-width: 520px){
+  .certik-badge{
+    top: 12px; right: 12px; gap: 8px; padding: 8px 10px;
+  }
+  .certik-badge span{ display: none; } /* icon-only on very small screens */
+}
+
+
+
+
+
+
+.audit-badge {
+  animation: pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 4px 12px rgba(34,197,94,.35); }
+  50% { transform: scale(1.05); box-shadow: 0 6px 16px rgba(34,197,94,.5); }
+}
+
+
+    /* Article wrapper */
+    .article { max-width: var(--maxw); margin: 24px auto 80px; padding: 0 20px; }
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,.015));
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: clip;
+    }
+    .card + .card { margin-top: 22px; }
+    .card .inner { padding: 24px; }
+
+    h2 { font-size: clamp(24px, 2.8vw, 34px); line-height: 1.2; margin: 0 0 10px; font-weight: 900; letter-spacing: -.01em; }
+    h3 { font-size: 20px; margin: 16px 0 8px; }
+    p { margin: 12px 0; color: var(--text); }
+    ul { margin: 10px 0 10px 1.25rem; }
+    li { margin: 8px 0; color: var(--muted); }
+
+    .grid { display: grid; gap: 16px; }
+    @media (min-width: 900px) {
+      .grid-3 { grid-template-columns: repeat(3, 1fr); }
+      .grid-2 { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .pill { display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; font-weight:800; font-size:12px; letter-spacing:.08em; text-transform:uppercase; border:1px solid rgba(255,255,255,.12); color: #e5e7eb; }
+
+    .flare {
+      position: relative; isolation: isolate; border-radius: var(--radius);
+    }
+    .flare::before {
+      content: ""; position: absolute; inset: -1px; z-index: -1; border-radius: inherit;
+      background: conic-gradient(from 180deg, rgba(139,92,246,.35), rgba(6,182,212,.35), transparent 40%, transparent 60%, rgba(6,182,212,.35), rgba(139,92,246,.35));
+      filter: blur(18px); opacity: .65; pointer-events: none;
+    }
+
+    .stat { display:flex; flex-direction:column; align-items:flex-start; gap:4px; padding:16px; border-radius:14px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); }
+    .stat b { font-size: 28px; }
+
+    .notice { font-size: 14px; color: var(--muted); }
+
+    .footer { max-width: var(--maxw); margin: 60px auto 80px; padding: 0 20px; color: var(--muted); }
+
+    a.inline { color: #a5b4fc; text-decoration: none; border-bottom: 1px dashed rgba(165,180,252,.35); }
+    a.inline:hover { color: white; }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <!-- ===== Nav ===== -->
+    <header class="nav">
+      <div class="nav-inner">
+        
+        </nav>
+      </div>
+    </header>
+
+    <!-- ===== Hero ===== -->
+    <main id="top" class="hero">
+      <div class="kicker">LAUNCHPAD • AI × GAMING • WEB3 ADOPTION</div>
+      <h1 class="hero-title">Bring Millions from Web2 to Web3 — through Play, Not Pain.</h1>
+      <p class="hero-sub">
+      <mark style="background: linear-gradient(135deg, #8b5cf6, #06b6d4); color: #0b0e14; padding: 2px 6px; border-radius: 6px; font-weight: 700;">
+        YearnTogether
+      </mark>
+      &nbsp;is a revolutionary, AI-supercharged launchpad that turns participation into a game. 
+      No crypto PhD required — ordinary people can now join real innovation, support projects they love, and benefit from provable, gamified access.
+     </p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="https://trade.kanga.exchange/starter/YEARN" target="_blank" rel="noopener noreferrer nofollow">Join IEO on Kanga Starter</a>
+        
+      </div>
+      <div class="read-meta">
+        <span class="tag">AI</span>
+        <span class="tag">Gaming</span>
+        <span class="tag">Launchpad</span>
+        <span class="tag">Certik</span>
+        <span class="tag">Chainlink</span>
+        <span class="notice"> 5–7 min read </span>
+      </div>
+    </main>
+
+    <!-- ===== Body / Medium-like article cards ===== -->
+    <section class="article">
+
+
+       <article id="how" class="card">
+        <div class="inner">
+          <h2>How it works — participation as a game</h2>
+          <div class="grid grid-2">
+            <div>
+              <h3>1) Join a Launch Pool</h3>
+              <p>
+                Pick a project. Stake passes, complete quests, and climb tiers. Your <em>game performance</em> boosts your take in the allocation.
+              </p>
+              <h3>2) AI-Guided Simplicity</h3>
+              <p>
+                Our intelligence layer explains every step, in plain language. 
+                It suggests tasks you’ll likely complete, reminds you of deadlines, and optimizes your progress.
+              </p>
+              <h3>3) Provable Fairness</h3>
+              <p>
+                Allocation logic and rewards are on-chain, auditable, and tamper-evident. 
+                Think <em>skill + luck</em> — not gas wars or insider lists.
+              </p>
+            </div>
+            <div>
+              <h3>4) Predict • Play • Earn</h3>
+              <p>
+                Seasonal events, prediction games, and streak bonuses keep momentum high. 
+                Contribution stays fun — and meaningful.
+              </p>
+              <h3>5) Claim Outcomes</h3>
+              <p>
+                When launches complete, allocations and rewards are claimable with full transparency.
+              </p>
+            </div>
+          </div>
+        </div>
+      </article> 
+
+      <article class="card">
+        <div class="inner">
+          <h2>Why it’s revolutionary</h2>
+          <ul>
+            <li><strong>From investors to participants:</strong> Everyone can play a role — gamers, creators, and everyday users included.</li>
+            <li><strong>Gamified access, not guesswork:</strong> Clear, rule-based progression. Earn your place with actions, not just capital.</li>
+            <li><strong>AI-supervised fairness:</strong> Behavior-aware systems reduce spam and boost authentic contribution.</li>
+            <li><strong>On-chain transparency:</strong> Staking, rewards, and allocation events are auditable end-to-end.</li>
+            <li><strong>Community flywheel:</strong> Multi-tier referrals reward organic growth — the community wins together.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article id="why" class="card flare">
+        <div class="inner">
+          <h2>Web3 shouldn’t feel like homework.</h2>
+          <p>
+            Exchanges, seed phrases, gas fees, bridges… Most people bounce. YearnTogether removes the friction with an 
+            <strong>AI-guided, gamified experience</strong> that feels like a tournament pass, not a trading terminal.
+          </p>
+          <div class="grid grid-3" style="margin-top:10px;">
+            <div class="stat"><span class="pill">Onboard</span> <b>Web2 → Web3</b><span>Simple flows, wallet help, human words.</span></div>
+            <div class="stat"><span class="pill">Engage</span> <b>Play-to-Participate</b><span>Quests, streaks, prediction games.</span></div>
+            <div class="stat"><span class="pill">Benefit</span> <b>Fair Access</b><span>Gamified allocations, provable rules.</span></div>
+          </div>
+        </div>
+      </article>
+
+      
+
+      <article id="ai" class="card flare">
+        <div class="inner">
+          <h2>AI × Gaming — the Adoption Engine</h2>
+          <p>
+            YearnTogether uses AI not as a chatbot, but as a <strong>Launchpad Intelligence Layer</strong>. 
+            It continuously learns from live participation and <em>adapts the game</em> — guiding users, balancing difficulty, 
+            and rewarding real engagement.
+          </p>
+          <div class="grid grid-3" style="margin-top:10px;">
+            <div class="stat"><span class="pill">Guide</span><b>Adaptive Coaching</b><span>Turn-by-turn help, frictions removed.</span></div>
+            <div class="stat"><span class="pill">Balance</span><b>Dynamic Difficulty</b><span>Right quests at the right time.</span></div>
+            <div class="stat"><span class="pill">Boost</span><b>Smart Allocation</b><span>Performance-aware, anti-sybil logic.</span></div>
+          </div>
+          <p class="notice">We don’t “chatbot” your journey. We <em>orchestrate</em> it — like a live game director for Web3.</p>
+        </div>
+      </article>
+
+      
+
+      <article id="trust" class="card flare">
+        <div class="inner trust-card">
+          <a class="certik-badge" href="https://skynet.certik.com/projects/yearntogether" target="_blank" rel="noopener">
+      <div class="certik-seal">
+        <img src="https://images.seeklogo.com/logo-png/43/1/certik-logo-png_seeklogo-432196.png" alt="CertiK" />
+      </div>
+      <span>CertiK Audited</span>
+    </a>
+
+
+
+          <h2>Trust & Transparency</h2>
+          <div class="grid grid-2">
+            <div>
+              <h3>Audits & Oracles</h3>
+              <p>
+                Integrations planned with leading security auditors and data oracles ensure integrity and verifiability.
+              </p>
+              <ul>
+                <li>Independent smart-contract audits</li>
+                <li>Oracle-backed randomness / price feeds</li>
+                <li>Public dashboards and subgraph indexing</li>
+              </ul>
+            </div>
+            <div>
+              <h3>Fair Play by Design</h3>
+              <p>
+                Anti-sybil heuristics, participation proofs, and behavior-based boosts keep the game competitive and fair.
+              </p>
+              <ul>
+                <li>Proof-of-participation & streaks</li>
+                <li>Rate limits and anomaly detection</li>
+                <li>Transparent, rules-driven allocation</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="inner">
+          <h2>Roadmap Highlights</h2>
+          <div class="grid grid-3">
+            <div class="stat"><span class="pill">Now</span><b>Core Game Loops</b><span>Staking passes, quests, referral boosts.</span></div>
+            <div class="stat"><span class="pill">Next</span><b>AI Live Director</b><span>Adaptive flows, real-time coaching.</span></div>
+            <div class="stat"><span class="pill">Soon</span><b>Creator Portals</b><span>No-code launch tools for founders.</span></div>
+          </div>
+         
+        </div>
+      </article>
+
+      <article id="join" class="card">
+        <div class="inner">
+          <h2>Ready to play your way into innovation?</h2>
+          <p>
+            We’re opening access via our launch partner. Tap below to jump straight into the action — no email forms, just play-to-participate.
+          </p>
+          <div class="hero-cta">
+            <a class="btn btn-primary" href="https://trade.kanga.exchange/starter/YEARN" target="_blank" rel="noopener noreferrer nofollow">Join on Kanga Starter</a>
+            <a class="btn btn-ghost" href="#how">How it works</a>
+          </div>
+          <p class="notice">You’ll be redirected to Kanga Starter to participate in the YearnTogether IEO.</p>
+        </div>
+      </article>
+    </section>
+
+    <footer class="footer">
+     
+    </footer>
+  </div>
+
+  <script>
+    // tiny helpers
+    document.getElementById('y').textContent = new Date().getFullYear();
+    function thanks(){
+      const note = document.getElementById('form-note');
+      if (!note) return;
+      note.textContent = 'Thanks! We\\'ll be in touch with an invite shortly.';
+      note.style.color = '#a5f3fc';
+    }
+  </script>
+</body>
+</html>
